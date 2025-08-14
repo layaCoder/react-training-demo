@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x7f8e;&#x840c;&#x524d;&#x7aef;&#x57f9;&#x8bad;&#x793a;&#x4f8b;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h3 id="美萌前端培训示例">美萌前端培训示例</h3>
+<h4 id="后台管理"><strong>后台管理</strong></h4>
+<hr>
+<ul>
+<li><strong>使用自定义hooks封装UI组件</strong></li>
+</ul>
+<p>在后台管理开发中, 常用的弹窗/抽屉 组件状态管理可以抽离成通用hooks方法, 方便复用, 减少代码量, 提升开发效率。</p>
+<pre><code class="language-typescript">
+<span class="hljs-comment">/** 页面 - 地址库 此页面中调用 useDrawerForm 自定义hooks */</span>
+
+...
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">AddressAddDrawer</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./add-drawer&#x27;</span>
+
+<span class="hljs-keyword">interface</span> <span class="hljs-title class_">IAddressLibraryProps</span> {}
+
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">Component</span>: <span class="hljs-variable constant_">FC</span>&lt;<span class="hljs-title class_">IAddressLibraryProps</span>&gt; = <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-comment">/** 编辑/新增地址 */</span>
+  <span class="hljs-keyword">const</span> { onAdd, onEdit, drawerFormProps } = useDrawerForm&lt;<span class="hljs-title class_">AddressOutputDto</span>&gt;(<span class="hljs-string">&#x27;地址&#x27;</span>)
+
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">tableColumns</span>: <span class="hljs-title class_">ProColumns</span>&lt;<span class="hljs-title class_">AddressOutputDto</span>&gt;[] = [
+    { <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;联系人&#x27;</span>, <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">&#x27;name&#x27;</span> },
+    <span class="hljs-comment">// ....</span>
+  ]
+
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">columns</span>: <span class="hljs-title class_">ProColumns</span>&lt;<span class="hljs-title class_">AddressOutputDto</span>&gt;[] = [...tableColumns.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> ({ ...item, <span class="hljs-attr">hideInSearch</span>: <span class="hljs-literal">true</span> }))]
+
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">onRefresh</span> = (<span class="hljs-params"></span>) =&gt; {
+    actionRef.<span class="hljs-property">current</span>?.<span class="hljs-title function_">reload</span>()
+  }
+
+  <span class="hljs-keyword">const</span> { request, actionRef, formRef } = <span class="hljs-title function_">useProTableRequest</span>(api[<span class="hljs-string">&#x27;/admin/mall/address/queryPage_GET&#x27;</span>])
+
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">PageContainer</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ProTable</span>
+        <span class="hljs-attr">formRef</span>=<span class="hljs-string">{formRef}</span>
+        <span class="hljs-attr">actionRef</span>=<span class="hljs-string">{actionRef}</span>
+        <span class="hljs-attr">columns</span>=<span class="hljs-string">{columns}</span>
+        <span class="hljs-attr">request</span>=<span class="hljs-string">{request}</span>
+        <span class="hljs-attr">rowKey</span>=<span class="hljs-string">&quot;id&quot;</span>
+        <span class="hljs-attr">search</span>=<span class="hljs-string">{false}</span>
+        <span class="hljs-attr">toolbar</span>=<span class="hljs-string">{{</span>
+          <span class="hljs-attr">actions:</span> [
+            &lt;<span class="hljs-attr">Button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;add&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;primary&quot;</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onAdd}</span>&gt;</span>
+              添加地址
+            <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>
+          ]
+        }}
+      /&gt;
+      {/* 新增/编辑地址 */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">AddressAddDrawer</span> {<span class="hljs-attr">...drawerFormProps</span>} <span class="hljs-attr">onRefresh</span>=<span class="hljs-string">{onRefresh}</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">PageContainer</span>&gt;</span></span>
+  )
+}
+
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">AddressLibrary</span> = <span class="hljs-title function_">memo</span>(<span class="hljs-title class_">Component</span>)
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">AddressLibrary</span>
+</code></pre>
+<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { sleep } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@wmeimob/utils/src/sleep&#x27;</span>
+<span class="hljs-comment">/** hooks - 弹窗表单hooks */</span>
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Form</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;antd&#x27;</span>
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">FormInstance</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;antd/es/form/Form&#x27;</span>
+<span class="hljs-keyword">import</span> { useState } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>
+
+<span class="hljs-comment">/**
+ * DrawerForm 表单hooks
+ * <span class="hljs-doctag">@returns</span>
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">DrawerFormProps</span>&lt;T&gt; {
+  <span class="hljs-comment">/** 表单实例 */</span>
+  <span class="hljs-attr">form</span>: <span class="hljs-title class_">FormInstance</span>&lt;T&gt;
+  <span class="hljs-comment">/** 表单标题 */</span>
+  <span class="hljs-attr">title</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-comment">/** 是否是查看详情 */</span>
+  <span class="hljs-attr">isDetail</span>: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-comment">/** 表单弹窗是否可见 */</span>
+  <span class="hljs-attr">open</span>: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-comment">/** 关闭弹窗 */</span>
+  <span class="hljs-attr">onClose</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span>
+  <span class="hljs-comment">/** 刷新表格 */</span>
+  onRefresh?: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span>
+  <span class="hljs-comment">/** 详情 */</span>
+  detail?: T
+  <span class="hljs-comment">/* 详情 */</span>
+  setDetail?: <span class="hljs-function">(<span class="hljs-params">detail: T</span>) =&gt;</span> <span class="hljs-built_in">void</span>
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">UseDrawerFormProps</span>&lt;T&gt; {
+  <span class="hljs-comment">/** DrawerForm 表单props */</span>
+  <span class="hljs-attr">drawerFormProps</span>: <span class="hljs-title class_">DrawerFormProps</span>&lt;T&gt;
+  <span class="hljs-comment">/** 表单赋值编辑 */</span>
+  <span class="hljs-attr">onEdit</span>: <span class="hljs-function">(<span class="hljs-params">record?: T</span>) =&gt;</span> <span class="hljs-built_in">void</span>
+  <span class="hljs-comment">/** 新增表单 */</span>
+  <span class="hljs-attr">onAdd</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span>
+  <span class="hljs-comment">/** 查看详情 */</span>
+  <span class="hljs-attr">onDetail</span>: <span class="hljs-function">(<span class="hljs-params">record?: T</span>) =&gt;</span> <span class="hljs-built_in">void</span>
+  <span class="hljs-comment">/** 复制 */</span>
+  <span class="hljs-attr">onCopy</span>: <span class="hljs-function">(<span class="hljs-params">record?: T</span>) =&gt;</span> <span class="hljs-built_in">void</span>
+}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> useDrawerForm&lt;T&gt;(drawerTitle = <span class="hljs-string">&#x27;&#x27;</span>): <span class="hljs-title class_">UseDrawerFormProps</span>&lt;T&gt; {
+  <span class="hljs-comment">/** 表单实例 */</span>
+  <span class="hljs-keyword">const</span> [form] = <span class="hljs-title class_">Form</span>.<span class="hljs-title function_">useForm</span>()
+
+  <span class="hljs-comment">/** 表单弹窗是否可见 */</span>
+  <span class="hljs-keyword">const</span> [open, setOpen] = <span class="hljs-title function_">useState</span>(<span class="hljs-literal">false</span>)
+  <span class="hljs-comment">/** 表单标题 */</span>
+  <span class="hljs-keyword">const</span> [title, setTitle] = <span class="hljs-title function_">useState</span>(<span class="hljs-string">&#x27;&#x27;</span>)
+  <span class="hljs-keyword">const</span> [detail, setDetail] = useState&lt;T&gt;()
+  <span class="hljs-comment">/** 是否是查看详情 */</span>
+  <span class="hljs-keyword">const</span> [isDetail, setIsDetail] = <span class="hljs-title function_">useState</span>(<span class="hljs-literal">false</span>)
+
+  <span class="hljs-comment">/** 表单赋值编辑 */</span>
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">onEdit</span> = (<span class="hljs-params">record?: T</span>) =&gt; {
+    <span class="hljs-title function_">setDetail</span>(record)
+    form.<span class="hljs-title function_">setFieldsValue</span>(record)
+    <span class="hljs-title function_">setTitle</span>(<span class="hljs-string">`编辑<span class="hljs-subst">${drawerTitle}</span>`</span>)
+    <span class="hljs-title function_">setOpen</span>(<span class="hljs-literal">true</span>)
+  }
+
+  <span class="hljs-comment">/** 新增表单 */</span>
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">onAdd</span> = (<span class="hljs-params"></span>) =&gt; {
+    form.<span class="hljs-title function_">resetFields</span>()
+    <span class="hljs-title function_">setTitle</span>(<span class="hljs-string">`添加<span class="hljs-subst">${drawerTitle}</span>`</span>)
+    <span class="hljs-title function_">setOpen</span>(<span class="hljs-literal">true</span>)
+  }
+
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">onCopy</span> = (<span class="hljs-params">record?: T</span>) =&gt; {
+    <span class="hljs-keyword">const</span> params = { ...record, <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-attr">isCopy</span>: <span class="hljs-literal">true</span> }
+    <span class="hljs-title function_">setDetail</span>(params)
+    form.<span class="hljs-title function_">setFieldsValue</span>(params)
+    <span class="hljs-title function_">setTitle</span>(<span class="hljs-string">`复制<span class="hljs-subst">${drawerTitle}</span>`</span>)
+    <span class="hljs-title function_">setOpen</span>(<span class="hljs-literal">true</span>)
+  }
+
+  <span class="hljs-comment">/** 查看详情 */</span>
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">onDetail</span> = (<span class="hljs-params">record?: T</span>) =&gt; {
+    <span class="hljs-title function_">setDetail</span>(record)
+    form.<span class="hljs-title function_">setFieldsValue</span>(record)
+    <span class="hljs-title function_">setIsDetail</span>(<span class="hljs-literal">true</span>)
+    <span class="hljs-title function_">setTitle</span>(<span class="hljs-string">`<span class="hljs-subst">${drawerTitle}</span>详情`</span>)
+    <span class="hljs-title function_">setOpen</span>(<span class="hljs-literal">true</span>)
+  }
+
+  <span class="hljs-comment">/** 关闭弹窗 */</span>
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">onClose</span> = <span class="hljs-keyword">async</span> (<span class="hljs-params"></span>) =&gt; {
+    form.<span class="hljs-title function_">resetFields</span>()
+    <span class="hljs-title function_">setOpen</span>(<span class="hljs-literal">false</span>)
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">sleep</span>(<span class="hljs-number">500</span>)
+    <span class="hljs-title function_">setIsDetail</span>(<span class="hljs-literal">false</span>)
+    <span class="hljs-title function_">setDetail</span>(<span class="hljs-literal">undefined</span>)
+  }
+
+  <span class="hljs-comment">/** DrawerForm 表单props */</span>
+  <span class="hljs-keyword">const</span> drawerFormProps = {
+    form,
+    isDetail,
+    title,
+    open,
+    onClose,
+    detail,
+    setDetail
+  }
+
+  <span class="hljs-keyword">return</span> { onEdit, onAdd, onDetail, drawerFormProps, onCopy }
+}
+</code></pre>
+<hr>
+<ul>
+<li><strong>使用userRef 配合 useImperativeHandle 暴露组件内部方法/状态</strong></li>
+</ul>
+<p>在组件内部管理自身状态, 同样减少代码冗余, 可以在外部调用组件内部方法来管理状态。</p>
+<pre><code class="language-typescript">
+<span class="hljs-comment">/** 
+ * 组件中, 使用useImperativeHandle 暴露内部方法
+ * 外部调用组件内部方法来管理状态
+ */</span>
+ */
+<span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">FC</span>, memo, forwardRef, useState, useImperativeHandle } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>
+<span class="hljs-keyword">import</span> styles <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./index.module.less&#x27;</span>
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">Button</span>, <span class="hljs-title class_">Flex</span>, <span class="hljs-title class_">Modal</span>, <span class="hljs-title class_">Typography</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;antd&#x27;</span>
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">ProColumns</span>, <span class="hljs-title class_">ProTable</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@ant-design/pro-components&#x27;</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ISendCouponModalAction</span> {
+  <span class="hljs-attr">openModal</span>: <span class="hljs-function">(<span class="hljs-params">data: <span class="hljs-built_in">any</span>[]</span>) =&gt;</span> <span class="hljs-built_in">void</span>
+}
+
+<span class="hljs-keyword">interface</span> <span class="hljs-title class_">ISaveFailureTableProps</span> {
+  <span class="hljs-attr">ref</span>: <span class="hljs-built_in">any</span>
+}
+
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">Component</span>: <span class="hljs-variable constant_">FC</span>&lt;<span class="hljs-title class_">ISaveFailureTableProps</span>&gt; = <span class="hljs-title function_">forwardRef</span>(<span class="hljs-function">(<span class="hljs-params">props, ref</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> [visible, setVisible] = <span class="hljs-title function_">useState</span>(<span class="hljs-literal">false</span>)
+  <span class="hljs-keyword">const</span> [data, setData] = useState&lt;<span class="hljs-built_in">any</span>[]&gt;([])
+
+  <span class="hljs-keyword">const</span> <span class="hljs-title function_">close</span> = (<span class="hljs-params"></span>) =&gt; {
+    <span class="hljs-title function_">setVisible</span>(<span class="hljs-literal">false</span>)
+  }
+
+  <span class="hljs-title function_">useImperativeHandle</span>(ref, <span class="hljs-function">() =&gt;</span> ({
+    <span class="hljs-attr">openModal</span>: <span class="hljs-function">(<span class="hljs-params">data: <span class="hljs-built_in">any</span>[]</span>) =&gt;</span> {
+      <span class="hljs-title function_">setData</span>(data)
+      <span class="hljs-title function_">setVisible</span>(<span class="hljs-literal">true</span>)
+    }
+  }))
+
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">columns</span>: <span class="hljs-title class_">ProColumns</span>&lt;<span class="hljs-built_in">any</span>&gt;[] = [
+    { <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;商品编码&#x27;</span>, <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">&#x27;goodsNo&#x27;</span>, <span class="hljs-attr">copyable</span>: <span class="hljs-literal">true</span> },
+  ]
+
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Modal</span>
+      <span class="hljs-attr">zIndex</span>=<span class="hljs-string">{99999}</span>
+      <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;新增/编辑活动失败&quot;</span>
+      <span class="hljs-attr">width</span>=<span class="hljs-string">{1000}</span>
+      <span class="hljs-attr">open</span>=<span class="hljs-string">{visible}</span>
+      <span class="hljs-attr">onClose</span>=<span class="hljs-string">{close}</span>
+      <span class="hljs-attr">onCancel</span>=<span class="hljs-string">{close}</span>
+      <span class="hljs-attr">onOk</span>=<span class="hljs-string">{close}</span>
+      <span class="hljs-attr">footer</span>=<span class="hljs-string">{</span>
+        &lt;<span class="hljs-attr">Flex</span> <span class="hljs-attr">justify</span>=<span class="hljs-string">&quot;flex-end&quot;</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;primary&quot;</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{close}</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">marginLeft:</span> <span class="hljs-attr">10</span> }}&gt;</span>
+            确认
+          <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">Flex</span>&gt;</span>
+      }
+    &gt;
+      <span class="hljs-tag">&lt;<span class="hljs-name">Typography.Text</span>&gt;</span>新增,/编辑活动失败,以下商品已参加其他活动~<span class="hljs-tag">&lt;/<span class="hljs-name">Typography.Text</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ProTable</span>
+        <span class="hljs-attr">scroll</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">x:</span> <span class="hljs-attr">1000</span> }}
+        <span class="hljs-attr">columns</span>=<span class="hljs-string">{columns}</span>
+        <span class="hljs-attr">dataSource</span>=<span class="hljs-string">{data}</span>
+        <span class="hljs-attr">pagination</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">pageSize:</span> <span class="hljs-attr">10</span> }}
+        <span class="hljs-attr">rowKey</span>=<span class="hljs-string">&quot;id&quot;</span>
+        <span class="hljs-attr">search</span>=<span class="hljs-string">{false}</span>
+        <span class="hljs-attr">toolBarRender</span>=<span class="hljs-string">{false}</span>
+      /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Modal</span>&gt;</span></span>
+  )
+})
+
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">SaveFailureTable</span> = <span class="hljs-title function_">memo</span>(<span class="hljs-title class_">Component</span>)
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">SaveFailureTable</span>
+</code></pre>
+<p><em>调用示例</em></p>
+<pre><code class="language-typescript">
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">SaveFailureTable</span>, { <span class="hljs-title class_">ISendCouponModalAction</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;~/components/marketing/save-failure-table&#x27;</span>
+
+<span class="hljs-keyword">interface</span> <span class="hljs-title class_">IClearanceActivitiesEditProps</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">DrawerFormProps</span>&lt;<span class="hljs-title class_">ResActivityClearanceDetailDto</span>&gt; {}
+
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">Component</span>: <span class="hljs-variable constant_">FC</span>&lt;<span class="hljs-title class_">IClearanceActivitiesEditProps</span>&gt; = <span class="hljs-function">(<span class="hljs-params">props</span>) =&gt;</span> {
+  <span class="hljs-comment">// const {} = props</span>
+
+  <span class="hljs-keyword">const</span> { title, open, onClose, form, isDetail, onRefresh, detail } = props
+
+  <span class="hljs-keyword">const</span> isEdit = <span class="hljs-title class_">Boolean</span>(detail?.<span class="hljs-property">id</span>) &amp;&amp; !detail?.<span class="hljs-property">isCopy</span>
+
+  <span class="hljs-keyword">const</span> failTableRef = useRef&lt;<span class="hljs-title class_">ISendCouponModalAction</span>&gt;(<span class="hljs-literal">null</span>)
+
+ <span class="hljs-keyword">const</span> [onFinish] = <span class="hljs-title function_">useSuperLock</span>(<span class="hljs-keyword">async</span> (values) =&gt; {
+    <span class="hljs-keyword">const</span> params = { ...values }
+     ...
+    <span class="hljs-keyword">try</span> {
+     ...
+    } <span class="hljs-keyword">catch</span> (error) {
+      <span class="hljs-keyword">if</span> (error?.<span class="hljs-property">data</span>?.<span class="hljs-property">data</span>) {
+        failTableRef.<span class="hljs-property">current</span>?.<span class="hljs-title function_">openModal</span>(error?.<span class="hljs-property">data</span>?.<span class="hljs-property">data</span>)
+      }
+    }
+  })
+
+  ...
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">DrawerForm</span>
+        <span class="hljs-attr">form</span>=<span class="hljs-string">{form}</span>
+        <span class="hljs-attr">readonly</span>=<span class="hljs-string">{isDetail}</span>
+        <span class="hljs-attr">disabled</span>=<span class="hljs-string">{isDetail}</span>
+        <span class="hljs-attr">title</span>=<span class="hljs-string">{title}</span>
+        <span class="hljs-attr">open</span>=<span class="hljs-string">{open}</span>
+        <span class="hljs-attr">width</span>=<span class="hljs-string">{1000}</span>
+        <span class="hljs-attr">scrollToFirstError</span>
+        <span class="hljs-attr">drawerProps</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">destroyOnClose:</span> <span class="hljs-attr">true</span>, <span class="hljs-attr">onClose</span> }}
+        <span class="hljs-attr">onFinish</span>=<span class="hljs-string">{onFinish}</span>
+        <span class="hljs-attr">submitter</span>=<span class="hljs-string">{defalutSubmitter(isDetail,</span> &#x27;创建并添加商品&#x27;)}
+      &gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ProCard</span> <span class="hljs-attr">bordered</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;基础设置&quot;</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">ProFormText</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;id&quot;</span> <span class="hljs-attr">hidden</span> /&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">ProFormLimitInput</span>
+            <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;name&quot;</span>
+            <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;活动名称&quot;</span>
+            <span class="hljs-attr">rules</span>=<span class="hljs-string">{[{</span> <span class="hljs-attr">required:</span> <span class="hljs-attr">true</span>, <span class="hljs-attr">message:</span> &#x27;请输入活动名称&#x27; }]}
+            <span class="hljs-attr">fieldProps</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">placeholder:</span> &#x27;请输入活动名称&#x27; }}
+            <span class="hljs-attr">maxLength</span>=<span class="hljs-string">{20}</span>
+          /&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">ProCard</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">DrawerForm</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">SaveFailureTable</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">{failTableRef}</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/&gt;</span></span>
+  )
+}
+
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">ClearanceActivitiesEdit</span> = <span class="hljs-title function_">memo</span>(<span class="hljs-title class_">Component</span>)
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">ClearanceActivitiesEdit</span>
+
+</code></pre>
+<hr>
+<ul>
+<li><strong>使用apifox脚本生成interface</strong></li>
+</ul>
+<p>使用apifox导出文件生成接口文件,并调其生成的interface来定义table数据类型, 方便后续开发。
+举例: pages\user-management\user-detail\components\address-list.tsx</p>
+<pre><code class="language-typescript">
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">AddressOutputDto</span>, api } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;~/request&#x27;</span>
+
+<span class="hljs-comment">// 此处使用api[...]调用 apifox导入的接口方法, ctl+左键 进入api详情, 可从返回的interface中找到table数据类型 ,如AddressOutputDto</span>
+<span class="hljs-keyword">const</span> { request, actionRef, formRef } = <span class="hljs-title function_">useProTableRequest</span>(api[<span class="hljs-string">&#x27;/admin/mall/address/queryPage_GET&#x27;</span>])
+
+
+<span class="hljs-keyword">const</span> <span class="hljs-title class_">Component</span>: <span class="hljs-variable constant_">FC</span>&lt;<span class="hljs-title class_">IAddressLibraryProps</span>&gt; = <span class="hljs-function">() =&gt;</span> {
+<span class="hljs-keyword">const</span> <span class="hljs-attr">tableColumns</span>: <span class="hljs-title class_">ProColumns</span>&lt;<span class="hljs-title class_">AddressOutputDto</span>&gt;[] = [
+    { <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;联系人&#x27;</span>, <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">&#x27;name&#x27;</span> },
+    ...
+  ]
+
+
+  <span class="hljs-keyword">return</span> (
+    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">PageContainer</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ProTable</span>
+        <span class="hljs-attr">formRef</span>=<span class="hljs-string">{formRef}</span>
+        <span class="hljs-attr">actionRef</span>=<span class="hljs-string">{actionRef}</span>
+        <span class="hljs-attr">columns</span>=<span class="hljs-string">{columns}</span>
+        <span class="hljs-attr">request</span>=<span class="hljs-string">{request}</span>
+        <span class="hljs-attr">rowKey</span>=<span class="hljs-string">&quot;id&quot;</span>
+        <span class="hljs-attr">search</span>=<span class="hljs-string">{false}</span>
+        <span class="hljs-attr">toolbar</span>=<span class="hljs-string">{{</span>
+          <span class="hljs-attr">actions:</span> [
+            &lt;<span class="hljs-attr">Button</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&quot;add&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;primary&quot;</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{onAdd}</span>&gt;</span>
+              添加地址
+            <span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>
+          ]
+        }}
+      /&gt;
+      {/* 新增/编辑地址 */}
+      <span class="hljs-tag">&lt;<span class="hljs-name">AddressAddDrawer</span> {<span class="hljs-attr">...drawerFormProps</span>} <span class="hljs-attr">onRefresh</span>=<span class="hljs-string">{onRefresh}</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">PageContainer</span>&gt;</span></span>
+  )
+}
+</code></pre>
+<p><em>request中生成的接口方法</em></p>
+<pre><code class="language-typescript">  <span class="hljs-string">&quot;/admin/mall/address/queryPage_GET&quot;</span>: <span class="hljs-function">(<span class="hljs-params">
+    query: AdminMallAddressQueryPageGetParams &amp; { requestConfig?: RequestConfig }
+  </span>) =&gt;</span> <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">JsonResultPagedResultAddressOutputDto</span>&gt;;
+</code></pre>
+<ul>
+<li><strong>利用vscode生成枚举类型</strong></li>
+</ul>
+<p>提前定义好枚举类型, 在table字段显示, select选择项中可直接使用, 语义清晰且便于维护.</p>
+<pre><code class="language-typescript">
+<span class="hljs-comment">/** 
+ * 枚举文件
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">enum</span> <span class="hljs-title class_">EHqCouponStatus</span> {
+  <span class="hljs-comment">/** 已作废 */</span>
+  <span class="hljs-title class_">Void</span> = <span class="hljs-number">3</span>,
+  <span class="hljs-comment">/** 生效中 */</span>
+  <span class="hljs-title class_">Valid</span> = <span class="hljs-number">1</span>,
+  <span class="hljs-comment">/** 未生效 */</span>
+  <span class="hljs-title class_">NoValid</span> = <span class="hljs-number">0</span>,
+  <span class="hljs-comment">/** 已过期 */</span>
+  <span class="hljs-title class_">Expired</span> = <span class="hljs-number">2</span>
+}
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">MHqCouponStatus</span> = {
+  [<span class="hljs-title class_">EHqCouponStatus</span>.<span class="hljs-property">Void</span>]: <span class="hljs-string">&#x27;已作废&#x27;</span>,
+  [<span class="hljs-title class_">EHqCouponStatus</span>.<span class="hljs-property">Valid</span>]: <span class="hljs-string">&#x27;生效中&#x27;</span>,
+  [<span class="hljs-title class_">EHqCouponStatus</span>.<span class="hljs-property">NoValid</span>]: <span class="hljs-string">&#x27;未生效&#x27;</span>,
+  [<span class="hljs-title class_">EHqCouponStatus</span>.<span class="hljs-property">Expired</span>]: <span class="hljs-string">&#x27;已过期&#x27;</span>
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">OHqCouponStatus</span> = [
+  { <span class="hljs-attr">value</span>: <span class="hljs-title class_">EHqCouponStatus</span>.<span class="hljs-property">Void</span>, <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;已作废&#x27;</span> },
+  { <span class="hljs-attr">value</span>: <span class="hljs-title class_">EHqCouponStatus</span>.<span class="hljs-property">Valid</span>, <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;生效中&#x27;</span> },
+  { <span class="hljs-attr">value</span>: <span class="hljs-title class_">EHqCouponStatus</span>.<span class="hljs-property">NoValid</span>, <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;未生效&#x27;</span> },
+  { <span class="hljs-attr">value</span>: <span class="hljs-title class_">EHqCouponStatus</span>.<span class="hljs-property">Expired</span>, <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;已过期&#x27;</span> }
+]
+</code></pre>
+<p><em>使用方法</em></p>
+<pre><code class="language-typescript">
+     <span class="hljs-comment">// 直接使用枚举类型 MHqCouponStatus, 根据valueEnum来赋值显示</span>
+ <span class="hljs-keyword">const</span> <span class="hljs-attr">tableColumns</span>: <span class="hljs-title class_">ProColumns</span>&lt;<span class="hljs-title class_">MemCouponHqResVO</span>&gt;[] = [
+    ...
+    { <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;状态&#x27;</span>, <span class="hljs-attr">dataIndex</span>: <span class="hljs-string">&#x27;status&#x27;</span>, <span class="hljs-attr">hideInSearch</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">valueEnum</span>: <span class="hljs-title class_">MHqCouponStatus</span> }
+    ]
+
+     <span class="hljs-comment">// 使用OProductSort来渲染select选择项</span>
+    &lt;<span class="hljs-title class_">ProFormSelect</span> label=<span class="hljs-string">&quot;商品排序&quot;</span> name=<span class="hljs-string">&quot;sort&quot;</span> options={<span class="hljs-title class_">OProductSort</span>} fieldProps={{ <span class="hljs-attr">allowClear</span>: <span class="hljs-literal">false</span> }} /&gt;
+</code></pre>
+<hr>
+<ul>
+<li><strong>前端简单工厂模式设计</strong></li>
+</ul>
+<p>往往再页面中,随着同数据状态的流转, 需要渲染不同的组件, 此处可以使用简单工厂模式设计, 提升代码的可读性与可维护性。</p>
+<h2 id="举例-卡索-taro-templatesrcpagesorder-pagesorder-detailindextsx-中的-buttongroup-组件">举例 卡索: taro-template/src/pages/order-pages/order-detail/index.tsx 中的 <em>ButtonGroup</em> 组件</h2>
+<p><img src="file:///d:\Weimob\Documents\前端培训\image-1.png" alt="alt text">
+<img src="file:///d:\Weimob\Documents\前端培训\image-2.png" alt="alt text"></p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>
